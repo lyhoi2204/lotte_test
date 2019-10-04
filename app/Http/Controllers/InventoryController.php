@@ -34,14 +34,14 @@ class InventoryController extends Controller
                   SELECT COALESCE(SUM(quantity), 0) FROM inventories AS i1 
                     WHERE i1.product_id = i.product_id
                     AND i1.type = :typeimport2
-                    AND DATE(updated_date) < :fromdate1
+                    AND DATE(i1.updated_date) < :fromdate1
                 ) 
                 -
                 (
-                  SELECT COALESCE(SUM(quantity), 0) FROM inventories AS i1 
-                    WHERE i1.product_id = i.product_id
-                    AND i1.type = :typeexport2
-                    AND DATE(updated_date) < :fromdate2
+                  SELECT COALESCE(SUM(quantity), 0) FROM inventories AS i2 
+                    WHERE i2.product_id = i.product_id
+                    AND i2.type = :typeexport2
+                    AND DATE(i2.updated_date) < :fromdate2
                 ) AS total_inventory
                   
             FROM `inventories` AS i
